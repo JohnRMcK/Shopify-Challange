@@ -1,0 +1,51 @@
+Winter 2021 Data Science Intern Challenge 
+
+Question 1: Given some sample data, write a program to answer the following: click here to access the required data set
+
+On Shopify, we have exactly 100 sneaker shops, and each of these shops sells only one model of shoe. We want to do some analysis of the average order value (AOV). When we look at orders data over a 30 day window, we naively calculate an AOV of $3145.13. Given that we know these shops are selling sneakers, a relatively affordable item, something seems wrong with our analysis. 
+
+Think about what could be going wrong with our calculation. Think about a better way to evaluate this data. 
+
+        The mean of this data set is distorted by 17 instances that have an order quantity og 2000 pairs of shoes and a bill amount of $704000.
+
+What metric would you report for this dataset?
+
+        You could remove the outliers and recalculate the mean, or you could use the median since it is less impacted by extreme observations. 
+
+What is its value?
+        The median order amount is $284, while the adjusted mean, after removing the 2000 shoe orders is approx $723 dollars. While my domain knowledge of the shoe industry is limited I would report the median to my stakeholders.  
+
+Question 2: For this question you’ll need to use SQL. Follow this link to access the data set required for the challenge. Please use queries to answer the following questions. Paste your queries along with your final numerical answers below.
+
+How many orders were shipped by Speedy Express in total?
+        Input:
+        SELECT COUNT(OrderID) FROM Orders WHERE ShipperID = 3;
+
+        Output:
+        68
+
+What is the last name of the employee with the most orders?
+
+        Input:
+        Select EmployeeID, COUNT(*) FROM Orders GROUP BY EmployeeID;
+
+        Output:
+
+        /* We now have the employee ID now we need a name */
+
+        Input:
+        SELECT Lastname FROM Employees WHERE EmployeeID = 4;
+
+        Output:
+        Peacock
+
+What product was ordered the most by customers in Germany?
+
+        Input:
+        SELECT Orders.OrderID, Orders.CustomerID, Customers.Country, OrderDetails.ProductID, OrderDetails.Quantity
+        FROM ((Orders
+        INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+        INNER JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID)
+        WHERE Country = 'Germany'
+
+        The above code got me the table I wanted. I then copied my results into excel and used a Pivot to determine that Product ID 31 was the most frequently ordered with 5 orders, but product 40 had the greatest quantity ordered at 160 units. 
